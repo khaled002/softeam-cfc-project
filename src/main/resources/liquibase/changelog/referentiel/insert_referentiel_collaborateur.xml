@@ -1,0 +1,16 @@
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+	<changeSet id="insert_referentiel_collaborateur" author="khaled">
+		<loadData encoding="UTF-8"
+			file="classpath:/liquibase/changelog/referentiel/collaborateurs.csv"
+			tableName="collaborateur"
+			separator=";">
+			<column name="nom" type="STRING" />
+			<column name="prenom" type="STRING" />
+			<column name="email" type="STRING" />
+			<column name="unite_affaire" type="STRING" />
+		</loadData>
+	</changeSet>
+</databaseChangeLog>

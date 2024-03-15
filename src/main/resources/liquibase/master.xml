@@ -1,0 +1,12 @@
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+	<!-- Incluez vos fichiers de changement ici -->
+	<include file="/liquibase/changelog/tables/added_entities.xml" />
+	<include file="/liquibase/changelog/constraints/added_constraint.xml" />
+	<include file="/liquibase/changelog/referentiel/insert_referentiel_client.xml" />
+	<include file="/liquibase/changelog/referentiel/insert_referentiel_collaborateur.xml" />
+	<include file="/liquibase/changelog/referentiel/insert_referentiel_values.xml" />
+</databaseChangeLog>

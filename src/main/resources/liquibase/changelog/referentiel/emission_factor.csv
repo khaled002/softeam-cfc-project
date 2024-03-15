@@ -1,0 +1,4 @@
+type;factor;unit
+Voiture;0.21;kg/CO2
+Bus;0.104;kg/CO2
+Metro;0.041;kg/CO2

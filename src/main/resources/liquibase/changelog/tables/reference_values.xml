@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="create_emission_factor_1" author="khaled">
+    <createTable tableName="emission_factor">
+        <column name="type" type="varchar(255)"/>
+        <column name="factor" type="double"/>
+        <column name="unit" type="varchar(20)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="create_device_consumption_1" author="khaled">
+    <createTable tableName="device_consumption">
+        <column name="device_type" type="varchar(255)"/>
+        <column name="consumption_per_hour" type="double"/>
+        <column name="unit" type="varchar(20)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="create_heating_emission_1" author="khaled">
+    <createTable tableName="heating_emission">
+        <column name="heating_type" type="varchar(255)"/>
+        <column name="emission_per_day" type="double"/>
+        <column name="unit" type="varchar(20)"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

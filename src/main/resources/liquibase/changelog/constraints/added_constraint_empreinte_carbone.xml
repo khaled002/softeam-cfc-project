@@ -1,0 +1,26 @@
+<!-- src/main/resources/db/changelog/changes/0001-initial-schema.xml -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    
+  
+
+  <!-- Ajout des clés étrangères -->
+    <changeSet id="constraint_empreinte_carbone_1" author="khaled">
+        <addForeignKeyConstraint constraintName="fk_empreinte_collaborateur"
+                                 baseTableName="empreinte_carbone" baseColumnNames="id_collaborateur"
+                                 referencedTableName="collaborateur" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_empreinte_client"
+                                 baseTableName="empreinte_carbone" baseColumnNames="id_client"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+    </changeSet>  
+    <!-- Ajout de la contrainte d'unicité sur id_collaborateur et id_client -->
+    <changeSet id="constraint_empreinte_carbone_2" author="khaled">
+        <addUniqueConstraint tableName="empreinte_carbone"
+                             columnNames="id_collaborateur, id_client"
+                             constraintName="unique_collaborateur_client"/>
+    </changeSet>
+
+  
+</databaseChangeLog>

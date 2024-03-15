@@ -1,0 +1,5 @@
+device_type;consumption_per_hour;unit
+desktopComputer;0.1;KWh
+laptop;0.05;KWh
+phone;0.01;KWh
+monitor;0.1;KWh

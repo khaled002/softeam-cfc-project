@@ -1,0 +1,17 @@
+<!-- src/main/resources/db/changelog/changes/0001-initial-schema.xml -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    
+
+    <!-- Création de la table EmpreinteCarbone -->
+    <changeSet id="create_empreinte_carbone_1" author="khaled">
+        <createTable tableName="empreinte_carbone">
+            <column name="id_collaborateur" type="int"/>
+            <column name="id_client" type="int"/>
+            <column name="empreinte" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

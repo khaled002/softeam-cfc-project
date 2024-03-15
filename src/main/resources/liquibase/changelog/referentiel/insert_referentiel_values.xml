@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="loadData_emission_factor" author="khaled">
+    <loadData 
+        encoding="UTF-8"
+        file="classpath:/liquibase/changelog/referentiel/emission_factor.csv"
+        tableName="emission_factor"
+        separator=";">
+        <column name="type" type="STRING"/>
+        <column name="factor" type="NUMERIC"/>
+    </loadData>
+  </changeSet>
+
+  <changeSet id="loadData_device_consumption" author="khaled">
+    <loadData
+        encoding="UTF-8"
+        file="classpath:/liquibase/changelog/referentiel/device_consumption.csv"
+        tableName="device_consumption"
+        separator=";">
+        <column name="device_type" type="STRING"/>
+        <column name="consumption_per_hour" type="NUMERIC"/>
+    </loadData>
+  </changeSet>
+
+  <changeSet id="loadData_heating_emission" author="khaled">
+    <loadData
+        encoding="UTF-8"
+        file="classpath:/liquibase/changelog/referentiel/heating_emission.csv"
+        tableName="heating_emission"
+        separator=";">
+        <column name="heating_type" type="STRING"/>
+        <column name="emission_per_day" type="NUMERIC"/>
+    </loadData>
+  </changeSet>
+
+</databaseChangeLog>

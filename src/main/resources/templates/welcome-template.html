@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mail de bienvenue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue, <span th:text="${name}"></span> !</h1>
+        <p>Merci pour votre participation à notre sondage sur les empreinte carbone<p>			
+		</p>votre adresse e-mail est bien la suivante :  <span th:text="${email}"></span>.</p>
+        <p>Cordialement,</p>
+        
+    </div>
+</body>
+</html>

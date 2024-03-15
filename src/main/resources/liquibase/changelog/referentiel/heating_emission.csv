@@ -1,0 +1,6 @@
+heating_type;emission_per_day;unit
+gaz;10.5;kg/CO2
+electrique;15.4;kg/CO2
+pompe;3.2;kg/CO2
+bois;3.5;kg/CO2
+collectif;3.5;kg/CO2
