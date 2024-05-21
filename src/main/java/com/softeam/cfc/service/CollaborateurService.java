@@ -18,5 +18,7 @@ public interface CollaborateurService {
 	public List<String> deleteByIds(List<String> ids) throws Exception;
 	
 	public List<String> getListofEmails(List<String> ids) throws Exception;
+	
+	public CollaborateurDTO findByEmail(String email) throws Exception;
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import com.softeam.cfc.dto.CollaborateurDTO;
 import com.softeam.cfc.mapper.CollaborateurMapper;
 import com.softeam.cfc.repository.CollaborateurRepository;
 import com.softeam.cfc.service.CollaborateurService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CollaborateurServiceImpl implements CollaborateurService {
@@ -81,6 +84,29 @@ public class CollaborateurServiceImpl implements CollaborateurService {
                 .collect(Collectors.toList());
 		List<Collaborateur> collabs = collaborateurRepository.findAllById(idsLong);
 		return collabs.stream().map(Collaborateur::getEmail).collect(Collectors.toList());
+	}
+
+	@Override
+	public CollaborateurDTO findByEmail(String email) throws Exception {
+		
+		try
+		{
+		Optional<Collaborateur> collaborateurOpt =  collaborateurRepository.findByEmail(email);
+		if(collaborateurOpt.isPresent())
+			return mapper.toDTO(collaborateurOpt.get());
+		
+		
+		return null;
+		
+		}catch(Exception e)
+		{
+			throw new BadRequestException(e.getMessage());
+		}
+		
+		
+		
+		
+		
 	}
 
 }

@@ -106,7 +106,7 @@ public class CollaborateurMailServiceImpl implements CollaborateurMailService {
 	public void sendSimpleEmail(String email) {
 		
 		SimpleMailMessage sm = new SimpleMailMessage();
-		sm.setFrom("test");
+		sm.setFrom("kais.benhajamor@softeam.fr");
 		sm.setTo(email);
 		sm.setSubject("carbon foot print test");
 		sm.setText(".....");
