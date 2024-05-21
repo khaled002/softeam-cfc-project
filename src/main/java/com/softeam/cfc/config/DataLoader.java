@@ -13,6 +13,7 @@ import com.softeam.cfc.repository.DeviceConsumptionRepository;
 import com.softeam.cfc.repository.EmissionFactorRepository;
 import com.softeam.cfc.repository.HeatingEmissionRepository;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,10 +36,18 @@ public class DataLoader {
     @PostConstruct
     public void loadDataIntoCache() {
         // Charger et mettre en cache les facteurs d'émission
-        List<EmissionFactor> emissionFactors = emissionFactorRepository.findAll();
-        for (EmissionFactor factor : emissionFactors) {
-            caffeineCache.put(CacheEnumKey.EMISSION_FACTOR.getValue()+ factor.getType(), factor.getFactor());
-        }
+    	List<EmissionFactor> emissionFactors = emissionFactorRepository.findAll();
+    	for (EmissionFactor factor : emissionFactors) {
+    	    // Créer une clé unique pour chaque combinaison
+    	    String key = CacheEnumKey.EMISSION_FACTOR.getValue() +
+    	                 factor.getType() +
+    	                 (StringUtils.isNotBlank(factor.getSubType()) ? "_" +factor.getSubType() : "")  +
+    	                 (StringUtils.isNotBlank(factor.getEnergy()) ?  "_" +factor.getEnergy()  : "")  +
+    	                 (StringUtils.isNotBlank(factor.getCarpooling()) ? "_" + factor.getCarpooling() : "");
+
+    	    // Mettre en cache le facteur d'émission en utilisant la clé unique
+    	    caffeineCache.put(key, factor.getFactor());
+    	}
 
         // Charger et mettre en cache la consommation des appareils
         List<DeviceConsumption> deviceConsumptions = deviceConsumptionRepository.findAll();

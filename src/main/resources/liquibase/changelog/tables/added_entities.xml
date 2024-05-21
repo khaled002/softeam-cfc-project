@@ -8,5 +8,7 @@
     <include file="/liquibase/changelog/tables/client.xml" />
     <include file="/liquibase/changelog/tables/empreinteCarbone.xml" />
     <include file="/liquibase/changelog/tables/reference_values.xml" />
+    <include file="/liquibase/changelog/tables/collab_carbon_footprint.xml" />
+    
 
 </databaseChangeLog>

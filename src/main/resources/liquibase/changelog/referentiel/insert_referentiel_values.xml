@@ -12,6 +12,9 @@
         tableName="emission_factor"
         separator=";">
         <column name="type" type="STRING"/>
+        <column name="sub_type" type="STRING"/>
+        <column name="energy" type="STRING"/>
+        <column name="carpooling" type="STRING"/>
         <column name="factor" type="NUMERIC"/>
     </loadData>
   </changeSet>

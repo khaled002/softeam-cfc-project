@@ -5,13 +5,24 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-  <changeSet id="create_emission_factor_1" author="khaled">
+  <changeSet id="create_emission_factor_table" author="khaled">
     <createTable tableName="emission_factor">
-        <column name="type" type="varchar(255)"/>
-        <column name="factor" type="double"/>
-        <column name="unit" type="varchar(20)"/>
+	  <column name="id" type="varchar(50)" />
+      <column name="type" type="varchar(255)" remarks="Main type of transport method"/>
+      <column name="sub_type" type="varchar(255)" remarks="Specifies the sub-type of the transport method, e.g., SUV, Electric scooter">
+        <constraints nullable="true"/>
+      </column>
+      <column name="energy" type="varchar(255)" remarks="Type of energy used by the transport, e.g., electric, gasoline">
+        <constraints nullable="true"/>
+      </column>
+      <column name="carpooling" type="varchar(255)" remarks="Indicates if carpooling is applicable, yes or no">
+        <constraints nullable="true"/>
+      </column>
+      <column name="factor" type="double" remarks="CO2 emission factor"/>
+      <column name="unit" type="varchar(20)" remarks="Unit of the emission factor"/>
     </createTable>
   </changeSet>
+
 
   <changeSet id="create_device_consumption_1" author="khaled">
     <createTable tableName="device_consumption">

@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.softeam.cfc.dto.CarbonFootPrintFormDTO;
 import com.softeam.cfc.service.EmpreinteCarboneService;
 
-import lombok.extern.log4j.Log4j2;
-
 @RestController
 @RequestMapping("/api/collaborateur")
-@Log4j2
 public class CollaborateurController {
 	
 	@Autowired
@@ -23,15 +20,8 @@ public class CollaborateurController {
 	@PostMapping(value="/cfc")
 	public ResponseEntity<String> calculateCarbonFootPrint(@RequestBody CarbonFootPrintFormDTO cfc)
 	{
-		
-		double d = empreinteCarboneService.calculateDailyCarbonFootprintForTravel(cfc);
-		
-		double d1 = empreinteCarboneService.calculateDailyCarbonFootprintForHome(cfc);
-		
-		log.info("calculateDailyCarbonFootprintForTravel :  {}",d);
-		log.info("calculateDailyCarbonFootprintForHome :  {}",d1);
-		
-		return ResponseEntity.ok().body("travel : "+d+"---- home"+d1);
+		double d = empreinteCarboneService.calculateDailyCarbonFootprintForOffice(cfc);
+		return ResponseEntity.ok(""+d);
 		
 	}
 

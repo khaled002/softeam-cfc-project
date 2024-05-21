@@ -7,5 +7,14 @@ import com.softeam.cfc.domain.Client;
 
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Long> {}
+public interface ClientRepository extends JpaRepository<Client, Long> {
+	
+	
+	 Client findByNomClient(String nomClient);
+	
+	
+	
+	
+	
+}
 

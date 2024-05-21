@@ -16,7 +16,15 @@ import lombok.Setter;
 @Table(name = "emission_factor")
 public class EmissionFactor {
 	@Id
+	private String id;
+	
 	private String type;
+	
+	private String subType;
+	
+	private String energy;
+	
+	private String carpooling;
 
 	private double factor;
 	

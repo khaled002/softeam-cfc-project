@@ -8,5 +8,6 @@
     <include file="/liquibase/changelog/constraints/added_constraint_client.xml" />
     <include file="/liquibase/changelog/constraints/added_constraint_empreinte_carbone.xml" />
     <include file="/liquibase/changelog/constraints/added_constraint_reference_values.xml" />
+    <include file="/liquibase/changelog/constraints/added_constraint_collab_carbon_footprint.xml" />
 
 </databaseChangeLog>

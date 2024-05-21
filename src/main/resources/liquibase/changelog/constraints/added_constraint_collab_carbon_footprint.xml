@@ -1,0 +1,30 @@
+<!-- src/main/resources/db/changelog/changes/0001-initial-schema.xml -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+
+	<changeSet id="2" author="yourname">
+		<addUniqueConstraint columnNames="collaborateur_id,client_id"
+			constraintName="uc_collaborateur_client"
+			tableName="collab_carbon_footprint" />
+	</changeSet>
+
+	<changeSet id="3" author="yourname">
+		<addForeignKeyConstraint baseColumnNames="collaborateur_id"
+			baseTableName="collab_carbon_footprint"
+			constraintName="fk_collab_carbon_footprint_collaborateur"
+			referencedColumnNames="id"
+			referencedTableName="collaborateur" />
+	</changeSet>
+
+	<changeSet id="4" author="yourname">
+		<addForeignKeyConstraint baseColumnNames="client_id"
+			baseTableName="collab_carbon_footprint"
+			constraintName="fk_collab_carbon_footprint_client"
+			referencedColumnNames="id"
+			referencedTableName="client" />
+	</changeSet>
+
+
+</databaseChangeLog>
