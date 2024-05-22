@@ -72,7 +72,7 @@ public class CollaborateurMailServiceImpl implements CollaborateurMailService {
 	            MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
 	            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
-	            helper.setFrom(mail.getFrom(), "Experts Club - Fuskinha");
+	            helper.setFrom(mail.getFrom(), "");
 	            helper.setTo(mail.getTo());
 	            helper.setSubject(mail.getSubject());
 	            helper.setText(mail.getMessage(), true);
@@ -108,8 +108,8 @@ public class CollaborateurMailServiceImpl implements CollaborateurMailService {
 		SimpleMailMessage sm = new SimpleMailMessage();
 		sm.setFrom("kais.benhajamor@softeam.fr");
 		sm.setTo(email);
-		sm.setSubject("carbon foot print test");
-		sm.setText(".....");
+		sm.setSubject("Formulaire d'empreinte carbone");
+		sm.setText("");
 		
 		javaMailSender.send(sm);
 		

@@ -1,13 +1,20 @@
 package com.softeam.cfc.service.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.softeam.cfc.config.CacheEnumKey;
+import com.softeam.cfc.domain.EmpreinteCarbone;
 import com.softeam.cfc.dto.CarbonFootPrintFormDTO;
+import com.softeam.cfc.dto.EmpreinteCarboneDto;
 import com.softeam.cfc.dto.LocomotionDto;
+import com.softeam.cfc.dto.enums.DeviceType;
 import com.softeam.cfc.dto.enums.MoyenTransport;
+import com.softeam.cfc.dto.enums.TypeVeloEnum;
 import com.softeam.cfc.service.CollaborateurCarbonFootPrintService;
 import com.softeam.cfc.service.EmpreinteCarboneService;
 
@@ -24,7 +31,9 @@ public class EmpreinteCarboneServiceImpl implements EmpreinteCarboneService {
 	private CollaborateurCarbonFootPrintService collaborateurCarbonFootPrintService;
 	
 	@Override
-	public double calculateDailyCarbonFootprintForOffice(CarbonFootPrintFormDTO cfc) {
+	public EmpreinteCarboneDto calculateDailyCarbonFootprintForOffice(CarbonFootPrintFormDTO cfc) {
+		
+		EmpreinteCarboneDto e = new EmpreinteCarboneDto();
 		 // Assurer que presenceDays n'est pas 0 pour éviter la division par zéro
 		int presenceDays = Integer.valueOf(cfc.getPresenceDays());
         if (presenceDays <= 0) {
@@ -32,16 +41,18 @@ public class EmpreinteCarboneServiceImpl implements EmpreinteCarboneService {
         }
         double emissionFactor = getEmissionFactorValue(cfc);
 			
-        double laptopConsumption = (double) cache.getIfPresent(CacheEnumKey.DEVICE_CONSUMPTION.getValue()+cfc.getLaptop()) * presenceDays;
-        double screenConsumption = (double) cache.getIfPresent(CacheEnumKey.DEVICE_CONSUMPTION.getValue()+cfc.getMonitor()) * presenceDays;
-        double phoneConsumption = (double) cache.getIfPresent(CacheEnumKey.DEVICE_CONSUMPTION.getValue()+cfc.getPhone()) * presenceDays;
-        double desktopConsumption = (double) cache.getIfPresent(CacheEnumKey.DEVICE_CONSUMPTION.getValue()+cfc.getDesktop()) * presenceDays;
+        double laptopConsumption = (double) cache.getIfPresent(CacheEnumKey.DEVICE_CONSUMPTION.getValue()+DeviceType.LAPTOP.getValue()) ;
+        double screenConsumption = (double) cache.getIfPresent(CacheEnumKey.DEVICE_CONSUMPTION.getValue()+DeviceType.MONITOR.getValue()) ;
+        double phoneConsumption = (double) cache.getIfPresent(CacheEnumKey.DEVICE_CONSUMPTION.getValue()+DeviceType.PHONE.getValue()) ;
+        double desktopConsumption = (double) cache.getIfPresent(CacheEnumKey.DEVICE_CONSUMPTION.getValue()+DeviceType.DESKTOP.getValue());
         
         double carbonFootPrint = emissionFactor + laptopConsumption + screenConsumption + phoneConsumption + desktopConsumption; 
-        
+        carbonFootPrint = truncateDouble(carbonFootPrint, 4);
         collaborateurCarbonFootPrintService.addColloboraeurCarbonFootPrint(cfc, String.valueOf(carbonFootPrint));
         
-        return carbonFootPrint;
+        e.setEmpreinteParJourDePrésence(String.valueOf(carbonFootPrint));
+        e.setEmpreinteTotalParSemaine(String.valueOf(carbonFootPrint * presenceDays));
+        return e;
 	}
 
 	private String getEmissionFactorKey(LocomotionDto locomotion)
@@ -59,9 +70,18 @@ public class EmpreinteCarboneServiceImpl implements EmpreinteCarboneService {
 			
 			if(StringUtils.isNotBlank(locomotion.getCovoiturage()))
 			{
-			     boolean b = Boolean.valueOf(locomotion.getCovoiturage());
-			     sb.append(UNDERSCORE).append(b ? "Oui" : "Non");
+			      sb.append(UNDERSCORE).append("Yes".equalsIgnoreCase(locomotion.getCovoiturage()) ? "Oui" : "Non");
 			}
+		}
+		
+		if(MoyenTransport.MOTO.getValue().equalsIgnoreCase(locomotion.getModeTransport()))
+		{
+			sb.append(UNDERSCORE).append(locomotion.getTypeMoto());
+		}
+		
+		if(MoyenTransport.VELO.getValue().equalsIgnoreCase(locomotion.getModeTransport()))
+		{
+			sb.append(UNDERSCORE).append("vae".equalsIgnoreCase(locomotion.getVae()) ?  TypeVeloEnum.ELECTRIC_ASSISTANCE.getValue() : TypeVeloEnum.STANDARD.getValue() );
 		}
 		
 		return sb.toString();
@@ -79,4 +99,13 @@ public class EmpreinteCarboneServiceImpl implements EmpreinteCarboneService {
                 })
                 .sum();
 	}
+
+	private double truncateDouble(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.DOWN);
+        return bd.doubleValue();
+    }
+
 }

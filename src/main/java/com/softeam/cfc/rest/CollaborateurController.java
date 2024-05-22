@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.softeam.cfc.dto.CarbonFootPrintFormDTO;
 import com.softeam.cfc.dto.CollaborateurDTO;
+import com.softeam.cfc.dto.EmpreinteCarboneDto;
 import com.softeam.cfc.service.CollaborateurService;
 import com.softeam.cfc.service.EmpreinteCarboneService;
 
@@ -29,10 +30,10 @@ public class CollaborateurController {
 	CollaborateurService collaborateurService;
 	
 	@PostMapping(value="/cfc")
-	public ResponseEntity<String> calculateCarbonFootPrint(@RequestBody CarbonFootPrintFormDTO cfc)
+	public ResponseEntity<EmpreinteCarboneDto> calculateCarbonFootPrint(@RequestBody CarbonFootPrintFormDTO cfc)
 	{
-		double d = empreinteCarboneService.calculateDailyCarbonFootprintForOffice(cfc);
-		return ResponseEntity.ok(""+d);
+		EmpreinteCarboneDto e  = empreinteCarboneService.calculateDailyCarbonFootprintForOffice(cfc);
+		return ResponseEntity.ok(e);
 		
 	}
 	

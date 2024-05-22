@@ -2,7 +2,7 @@ package com.softeam.cfc.dto.enums;
 
 public enum DeviceType {
     LAPTOP("laptop"),
-    DESKTOP_COMPUTER("desktopComputer"),
+    DESKTOP("desktop"),
     MONITOR("monitor"),
     PHONE("phone");
 

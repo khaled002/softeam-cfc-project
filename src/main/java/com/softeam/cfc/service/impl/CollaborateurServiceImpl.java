@@ -15,8 +15,6 @@ import com.softeam.cfc.mapper.CollaborateurMapper;
 import com.softeam.cfc.repository.CollaborateurRepository;
 import com.softeam.cfc.service.CollaborateurService;
 
-import jakarta.persistence.EntityNotFoundException;
-
 @Service
 public class CollaborateurServiceImpl implements CollaborateurService {
 

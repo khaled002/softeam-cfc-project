@@ -1,5 +1,6 @@
 package com.softeam.cfc.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "collab-carbon-footprint")
+@Table(name = "collab_carbon_footprint")
 public class CollabCarbonFootPrint {
 
 	@Id
@@ -32,6 +33,7 @@ public class CollabCarbonFootPrint {
 	@JoinColumn(name = "client_id", nullable = false)
 	private Client client;
 
-	private String carbonFootPrint;
+	@Column(name="carbon_footprint")
+	private String carbonFootprint;
 
 }

@@ -25,6 +25,7 @@ public class CollaborateurCarbonFootPrintServiceImpl implements CollaborateurCar
 	@Autowired
 	CollaborateurRepository collaborateurRepository;
 	
+	@Autowired
 	CollabCarbonFootPrintRepository collabCarbonFootPrintRepository;
 
 	@Override
@@ -36,7 +37,7 @@ public class CollaborateurCarbonFootPrintServiceImpl implements CollaborateurCar
 		
 		collabCarbonFootPrint.setCollaborateur(collaborateurOpt.get());
 		collabCarbonFootPrint.setClient(client);
-		collabCarbonFootPrint.setCarbonFootPrint(carbonFootPrint);
+		collabCarbonFootPrint.setCarbonFootprint(carbonFootPrint);
 		
 		collabCarbonFootPrintRepository.save(collabCarbonFootPrint);
 	}
