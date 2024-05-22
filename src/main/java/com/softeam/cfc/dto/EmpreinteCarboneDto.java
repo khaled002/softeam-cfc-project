@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class EmpreinteCarboneDto {
 	
-	private String empreinteParJourDePrésence; 
+	private String empreinteParJourDePresence; 
 	
 	private String empreinteTotalParSemaine;
 	

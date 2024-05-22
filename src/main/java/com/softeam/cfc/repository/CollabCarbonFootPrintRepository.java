@@ -7,6 +7,4 @@ import com.softeam.cfc.domain.CollabCarbonFootPrint;
 
 
 @Repository
-public interface CollabCarbonFootPrintRepository extends JpaRepository<CollabCarbonFootPrint, Long> {
-
-}
+public interface CollabCarbonFootPrintRepository extends JpaRepository<CollabCarbonFootPrint, Long> {}

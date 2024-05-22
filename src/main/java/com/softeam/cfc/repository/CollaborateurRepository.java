@@ -17,4 +17,7 @@ public interface CollaborateurRepository extends JpaRepository<Collaborateur, Lo
 	 @Query(value = "SELECT * FROM collaborateur  where email=:email", nativeQuery = true )
 	 public Optional<Collaborateur> findByEmail(@Param("email") String email);
 	 
+	 
+	 
+	 
 }

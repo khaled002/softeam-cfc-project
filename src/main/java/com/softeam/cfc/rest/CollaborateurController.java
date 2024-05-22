@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softeam.cfc.dto.CarbonFootPrintFormDTO;
 import com.softeam.cfc.dto.CollaborateurDTO;
 import com.softeam.cfc.dto.EmpreinteCarboneDto;
+import com.softeam.cfc.dto.EmpreinteStatsDto;
 import com.softeam.cfc.service.CollaborateurService;
 import com.softeam.cfc.service.EmpreinteCarboneService;
 
@@ -44,6 +44,19 @@ public class CollaborateurController {
 		try {
 			CollaborateurDTO c = collaborateurService.findByEmail(email);
 			return ResponseEntity.ok().body(c);
+		} catch (Exception e) {
+			log.error("Error occured while trying to get  collaborateur : {}", e.getMessage());
+			return ResponseEntity.internalServerError().body(null);
+		}
+	}
+	
+	@GetMapping(value="/stats")
+	public ResponseEntity<EmpreinteStatsDto> getCollaborateurStats()
+	{
+		try {
+			EmpreinteStatsDto dto = collaborateurService.getCollaborateursStats();
+			return ResponseEntity.ok().body(dto);
+
 		} catch (Exception e) {
 			log.error("Error occured while trying to get  collaborateur : {}", e.getMessage());
 			return ResponseEntity.internalServerError().body(null);

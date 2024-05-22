@@ -50,7 +50,7 @@ public class EmpreinteCarboneServiceImpl implements EmpreinteCarboneService {
         carbonFootPrint = truncateDouble(carbonFootPrint, 4);
         collaborateurCarbonFootPrintService.addColloboraeurCarbonFootPrint(cfc, String.valueOf(carbonFootPrint));
         
-        e.setEmpreinteParJourDePrésence(String.valueOf(carbonFootPrint));
+        e.setEmpreinteParJourDePresence(String.valueOf(carbonFootPrint));
         e.setEmpreinteTotalParSemaine(String.valueOf(carbonFootPrint * presenceDays));
         return e;
 	}

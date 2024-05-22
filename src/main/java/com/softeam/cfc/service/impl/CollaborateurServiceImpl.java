@@ -1,6 +1,8 @@
 package com.softeam.cfc.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -9,17 +11,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import com.softeam.cfc.domain.CollabCarbonFootPrint;
 import com.softeam.cfc.domain.Collaborateur;
 import com.softeam.cfc.dto.CollaborateurDTO;
+import com.softeam.cfc.dto.CollaborateurStatsDTO;
+import com.softeam.cfc.dto.EmpreinteStatsDto;
 import com.softeam.cfc.mapper.CollaborateurMapper;
+import com.softeam.cfc.repository.CollabCarbonFootPrintRepository;
 import com.softeam.cfc.repository.CollaborateurRepository;
 import com.softeam.cfc.service.CollaborateurService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class CollaborateurServiceImpl implements CollaborateurService {
 
 	@Autowired
 	CollaborateurRepository collaborateurRepository;
+	
+	@Autowired
+	CollabCarbonFootPrintRepository collabCarbonFootPrintRepository;
 
 	@Autowired
 	private CollaborateurMapper mapper;
@@ -100,11 +112,61 @@ public class CollaborateurServiceImpl implements CollaborateurService {
 		{
 			throw new BadRequestException(e.getMessage());
 		}
-		
-		
-		
-		
-		
 	}
+
+	@Override
+	public EmpreinteStatsDto getCollaborateursStats() throws Exception {
+
+		try {
+			
+			EmpreinteStatsDto empreinteStatsDto = new EmpreinteStatsDto();
+			List<CollaborateurStatsDTO> collabStatsAnswered = new ArrayList<>();
+		    List<CollaborateurStatsDTO> collabStatsDidNotAnswer = new ArrayList<>();
+			
+			List<CollabCarbonFootPrint> listCollabCarbonFootPrint = collabCarbonFootPrintRepository.findAll();
+			List<Collaborateur> totalCollab = collaborateurRepository.findAll();
+
+			empreinteStatsDto.setNbCollaborateursWhoAnswered(String.valueOf(listCollabCarbonFootPrint.size()));
+			empreinteStatsDto.setNbCollaborateursWhoDidNotanswer(String.valueOf(totalCollab.size() - listCollabCarbonFootPrint.size()));
+			
+			
+	       
+
+	        // Créer un map pour associer les IDs des collaborateurs aux clients
+	        Map<Long, String> map = listCollabCarbonFootPrint.stream().collect(Collectors.toMap(
+	        		c -> c.getCollaborateur().getId(),
+	        		c -> c.getClient().getNomClient()));
+
+
+	        for (Collaborateur collaborateur : totalCollab) {
+	            CollaborateurStatsDTO c = new CollaborateurStatsDTO();
+	            c.setNom(collaborateur.getNom());
+	            c.setPrenom(collaborateur.getPrenom());
+	            c.setEmail(collaborateur.getEmail());
+	            // Chercher le client à partir du map
+	            c.setClient(map.get(collaborateur.getId()));
+	            // Distribuer ensuite les données 
+	            if (map.containsKey(collaborateur.getId())) {
+	                collabStatsAnswered.add(c);
+	            } else {
+	                collabStatsDidNotAnswer.add(c);
+	            }
+	            
+	        }
+	        
+	        empreinteStatsDto.setCollabStatsAnswered(collabStatsAnswered);
+	        empreinteStatsDto.setCollabStatsDidNotAnswer(collabStatsDidNotAnswer);
+			
+			return empreinteStatsDto;
+			
+
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new BadRequestException(e.getMessage());
+		}
+
+	}
+	
+	
 
 }
