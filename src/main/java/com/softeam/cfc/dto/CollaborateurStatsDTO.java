@@ -7,6 +7,7 @@ import lombok.Data;
 		
 		private String nom; 
 		private String prenom;
+		private String uc;
 		private String email;
 		private String client;
 	

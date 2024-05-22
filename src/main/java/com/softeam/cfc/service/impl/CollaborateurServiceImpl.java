@@ -142,6 +142,7 @@ public class CollaborateurServiceImpl implements CollaborateurService {
 	            CollaborateurStatsDTO c = new CollaborateurStatsDTO();
 	            c.setNom(collaborateur.getNom());
 	            c.setPrenom(collaborateur.getPrenom());
+	            c.setUc(collaborateur.getUniteAffaire());
 	            c.setEmail(collaborateur.getEmail());
 	            // Chercher le client à partir du map
 	            c.setClient(map.get(collaborateur.getId()));
