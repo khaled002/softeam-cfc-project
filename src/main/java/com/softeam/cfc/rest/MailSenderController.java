@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.context.Context;
 
 import com.softeam.cfc.service.CollaborateurMailService;
 import com.softeam.cfc.service.CollaborateurService;
 
+import jakarta.mail.MessagingException;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
@@ -36,8 +38,14 @@ public class MailSenderController {
 		try {
 			
 			List<String> emails = collaborateurService.getListofEmails(ids);
+			Context context = new Context();
+	            
 			emails.forEach(email -> {
-				mailService.sendSimpleEmail(email);
+				try {
+					mailService.sendEmail(email, context);
+				} catch (MessagingException e) {
+					log.error(e.getMessage());
+				}
 				
 			});
 			
