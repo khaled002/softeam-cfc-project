@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.softeam.cfc.config.CacheEnumKey;
-import com.softeam.cfc.domain.EmpreinteCarbone;
 import com.softeam.cfc.dto.CarbonFootPrintFormDTO;
 import com.softeam.cfc.dto.EmpreinteCarboneDto;
 import com.softeam.cfc.dto.LocomotionDto;
@@ -47,11 +46,10 @@ public class EmpreinteCarboneServiceImpl implements EmpreinteCarboneService {
         double desktopConsumption = (double) cache.getIfPresent(CacheEnumKey.DEVICE_CONSUMPTION.getValue()+DeviceType.DESKTOP.getValue());
         
         double carbonFootPrint = emissionFactor + laptopConsumption + screenConsumption + phoneConsumption + desktopConsumption; 
-        carbonFootPrint = truncateDouble(carbonFootPrint, 4);
-        collaborateurCarbonFootPrintService.addColloboraeurCarbonFootPrint(cfc, String.valueOf(carbonFootPrint));
+        collaborateurCarbonFootPrintService.addColloboraeurCarbonFootPrint(cfc, String.valueOf(truncateDouble(carbonFootPrint, 4)));
         
         e.setEmpreinteParJourDePresence(String.valueOf(carbonFootPrint));
-        e.setEmpreinteTotalParSemaine(String.valueOf(carbonFootPrint * presenceDays));
+        e.setEmpreinteTotalParSemaine(String.valueOf(truncateDouble(carbonFootPrint* presenceDays, 4)));
         return e;
 	}
 
@@ -89,15 +87,17 @@ public class EmpreinteCarboneServiceImpl implements EmpreinteCarboneService {
 	
 	
 	private double getEmissionFactorValue(CarbonFootPrintFormDTO cfc)
-	{	// retourne la somme des cfc trajets aller et retour 
-		return cfc.getLocomotions()
-                .stream()
-                .mapToDouble(l -> {
-                    double distance = Double.parseDouble(l.getDistance());
-                    double emissionFactorPerKm = (double) cache.getIfPresent(getEmissionFactorKey(l));
-                    return distance * emissionFactorPerKm * 2;
-                })
-                .sum();
+	{
+		double emissionFactor = 0;
+		// retourne la somme des cfc trajets aller et retour 
+		for(LocomotionDto l : cfc.getLocomotions())
+		{
+	        double distance = Double.parseDouble(l.getDistance());
+	        double emissionFactorPerKm = (double) cache.getIfPresent(getEmissionFactorKey(l));
+	        emissionFactor +=  distance * emissionFactorPerKm * 2;
+		}
+		
+		return emissionFactor;
 	}
 
 	private double truncateDouble(double value, int places) {

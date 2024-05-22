@@ -33,13 +33,26 @@ public class CollaborateurCarbonFootPrintServiceImpl implements CollaborateurCar
 		
 		Client client = clientRepository.findByNomClient(carbonFootPrintFormDTO.getClient());
 		Optional<Collaborateur> collaborateurOpt = collaborateurRepository.findByEmail(carbonFootPrintFormDTO.getEmail());
-		CollabCarbonFootPrint collabCarbonFootPrint = new CollabCarbonFootPrint();
+		if(collaborateurOpt.isPresent())
+		{
+			Collaborateur c = collaborateurOpt.get();
+			CollabCarbonFootPrint collabCarbonFootPrint = collabCarbonFootPrintRepository.findByCollaborateurId(c.getId());
+			if(collabCarbonFootPrint != null)
+			{
+				collabCarbonFootPrint.setClient(client);
+				collabCarbonFootPrint.setCarbonFootprint(carbonFootPrint);
+			}else 
+			{
+				collabCarbonFootPrint = new CollabCarbonFootPrint();
+				collabCarbonFootPrint.setCollaborateur(c);
+				collabCarbonFootPrint.setClient(client);
+				collabCarbonFootPrint.setCarbonFootprint(carbonFootPrint);
+			}
 		
-		collabCarbonFootPrint.setCollaborateur(collaborateurOpt.get());
-		collabCarbonFootPrint.setClient(client);
-		collabCarbonFootPrint.setCarbonFootprint(carbonFootPrint);
+		    collabCarbonFootPrintRepository.saveAndFlush(collabCarbonFootPrint);
+		}
 		
-		collabCarbonFootPrintRepository.save(collabCarbonFootPrint);
+		
 	}
 	
 	

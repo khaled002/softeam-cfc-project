@@ -31,6 +31,14 @@ id;type;sub_type;energy;carpooling;factor;unit
 39;Voiture;Berline;Hybride;Oui;0.20;kg/CO2
 40;Voiture;Berline;Electrique;Non;0.16;kg/CO2
 41;Voiture;Berline;Electrique;Oui;0.14;kg/CO2
+42;Voiture;Citadine;GPL;Non;0.22;kg/CO2
+43;Voiture;Citadine;GPL;Oui;0.20;kg/CO2
+44;Voiture;SUV;GPL;Non;0.28;kg/CO2
+45;Voiture;SUV;GPL;Oui;0.26;kg/CO2
+46;Voiture;Utilitaire;GPL;Non;0.32;kg/CO2
+47;Voiture;Utilitaire;GPL;Oui;0.30;kg/CO2
+48;Voiture;Berline;GPL;Non;0.25;kg/CO2
+49;Voiture;Berline;GPL;Oui;0.23;kg/CO2
 18;Bus;;;;0.104;kg/CO2
 19;Métro;;;;0.041;kg/CO2
 20;Vélo;Standard;;;0.01;kg/CO2
